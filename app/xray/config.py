@@ -165,7 +165,6 @@ class XRayConfig(dict):
                     settings['is_fallback'] = True
                 except KeyError:
                     raise ValueError("fallbacks inbound doesn't have port")
-
             # stream settings
             if stream := inbound.get('streamSettings'):
                 net = stream.get('network', 'tcp')

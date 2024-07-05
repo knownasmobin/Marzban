@@ -40,7 +40,9 @@ def get_system_stats(db: Session = Depends(get_db), admin: Admin = Depends(Admin
 
 @app.get('/api/inbounds', tags=["System"], response_model=Dict[ProxyTypes, List[ProxyInbound]])
 def get_inbounds(admin: Admin = Depends(Admin.get_current)):
-    return xray.config.inbounds_by_protocol
+    if admin.is_sudo:
+        return xray.config.inbounds_by_protocol
+    return xray.config.inbounds_by_protocol.pop("shadowsocks")
 
 
 @app.get('/api/hosts', tags=["System"], response_model=Dict[str, List[ProxyHost]])
